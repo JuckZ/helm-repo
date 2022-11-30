@@ -1,0 +1,18 @@
+version: '3'
+services:
+  frps:
+    image: snowdreamtech/frps:0.38.0
+    volumes:
+      - ./config/frps.ini:/etc/frp/frps.ini 
+    restart: always
+    network_mode: "host"
+
+  frpc:
+    image: snowdreamtech/frpc:0.38.0
+    depends_on:
+      - frps
+    volumes:
+      - ./config/frpc.ini:/etc/frp/frpc.ini 
+      - ./config/ssl/:/etc/frp/ssl/
+    restart: always
+    network_mode: "host"

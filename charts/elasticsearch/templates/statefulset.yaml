@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    version: v1
+    app: elasticsearch
+    app.kubernetes.io/version: v1
+    app.kubernetes.io/name: elasticsearch
+  name: elasticsearch-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v1
+      app: elasticsearch
+      app.kubernetes.io/version: v1
+      app.kubernetes.io/name: elasticsearch
+  template:
+    metadata:
+      labels:
+        version: v1
+        app: elasticsearch
+        app.kubernetes.io/version: v1
+        app.kubernetes.io/name: elasticsearch
+    spec:
+      containers:
+        - name: container-5zhs4u
+          imagePullPolicy: IfNotPresent
+          image: docker.io/library/elasticsearch:7.9.3
+          env:
+            - name: ES_JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-search-conf
+                  key: ES_JAVA_OPTS
+            - name: discovery.type
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-search-conf
+                  key: discovery.type
+            - name: http.host
+              valueFrom:
+                configMapKeyRef:
+                  name: elastic-search-conf
+                  key: http.host
+          ports:
+            - name: http-9200
+              protocol: TCP
+              containerPort: 9200
+            - name: http-9300
+              protocol: TCP
+              containerPort: 9300
+          resources:
+            requests:
+              cpu: '0.2'
+              memory: 500Mi
+            limits:
+              cpu: '2'
+              memory: 1000Mi
+          volumeMounts:
+            - name: volume-0w9u7w
+              readOnly: false
+              mountPath: /usr/share/elasticsearch/data
+      serviceAccount: default
+      affinity: {}
+      initContainers: []
+      volumes:
+        - name: volume-0w9u7w
+          persistentVolumeClaim:
+            claimName: elasticsearch-pvc
+      imagePullSecrets: null
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  serviceName: elasticsearch

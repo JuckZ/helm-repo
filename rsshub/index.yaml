@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rsshub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      # manage pods with the label app: rsshub
+      app: rsshub
+  template:
+    metadata:
+      labels:
+        app: rsshub
+    spec:
+      containers:
+      - name: rsshub
+        image: diygod/rsshub:2021-11-28
+        ports:
+        - containerPort: 1200

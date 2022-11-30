@@ -1,0 +1,66 @@
+name: Release Charts
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'charts/**'
+
+jobs:
+  release:
+    # depending on default permission settings for your org (contents being read-only or read-write for workloads), you will have to add permissions
+    # see: https://docs.github.com/en/actions/security-guides/automatic-token-authentication#modifying-the-permissions-for-the-github_token
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.10.0
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.4.1
+        with:
+          charts_dir: charts
+          config: cr.yaml
+          charts_repo_url: https://juckz.github.io/helm-repo
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Send push notification
+        if: false
+        id: notification
+        env:
+          SUBSCRIBER_USER: "${{ secrets.SUBSCRIBER_USER }}"
+          SUBSCRIBER_PASS: "${{ secrets.SUBSCRIBER_PASS }}"
+          NTFY_URL: "${{ secrets.NTFY_URL }}"
+        run: |
+          echo $GITHUB_ACTION
+          echo ${GITHUB_WORKFLOW}
+          curl $NTFY_URL \
+            -d '{
+              "topic": "githubaction",
+              "message": "'${GITHUB_JOB}' '${GITHUB_ACTION}' has done \n${{ github.event.head_commit.message }}",
+              "title": "${{ github.repository }}",
+              "tags": ["loudspeaker","octopus"],
+              "icon": "https://avatars.githubusercontent.com/in/15368?s=64&v=4",
+              "priority": 4,
+              "attach": "https://xxx.png",
+              "filename": "xxx.png",
+              "click": "https://github.com/${{ github.repository }}",
+              "actions": [{ "action": "view", "label": "${{ github.repository }}", "url": "https://github.com/${{ github.repository }}" }]
+            }' \
+            -u $SUBSCRIBER_USER:$SUBSCRIBER_PASS

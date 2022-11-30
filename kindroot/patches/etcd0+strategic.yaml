@@ -1,0 +1,7 @@
+spec:
+  containers:
+    - name: etcd
+      resources:
+        requests:
+          cpu: 50m
+          memory: 100Mi

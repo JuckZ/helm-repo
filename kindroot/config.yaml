@@ -1,0 +1,61 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+# patch the generated kubeadm config with some extra settings
+kubeadmConfigPatches:
+- |
+  apiVersion: kubelet.config.k8s.io/v1beta1
+  kind: KubeletConfiguration
+  metadata:
+    name: config
+  kubeReserved:
+      cpu: "100m"
+      memory: "100Mi"
+      ephemeral-storage: "1Gi"
+  # kubeReservedCgroup: "/kube-reserved"
+  systemReserved:
+      cpu: "150m"
+      memory: "200Mi"
+      ephemeral-storage: "2Gi"
+  evictionHard:
+    memory.available:  "200Mi"
+    nodefs.available: "10%"
+  # featureGates:
+  #   DynamicKubeletConfig: true
+  #   RotateKubeletServerCertificate: true
+    
+# patch it further using a JSON 6902 patch
+kubeadmConfigPatchesJSON6902:
+- group: kubeadm.k8s.io
+  version: v1beta2
+  kind: ClusterConfiguration
+  patch: |
+    - op: add
+      path: /apiServer/certSANs/-
+      value: my-hostname
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    apiServer:
+      extraArgs:
+        request-timeout: 10s
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+    patches:
+      directory: /root/kindroot/patches
+  extraPortMappings:
+  - containerPort: 80
+    hostPort: 80
+    protocol: TCP
+  - containerPort: 443
+    hostPort: 443
+    protocol: TCP
+  extraMounts:
+  - hostPath: /root/kindroot
+    containerPath: /root/kindroot
+# the three workers
+#- role: worker
+#- role: worker
+#- role: worker

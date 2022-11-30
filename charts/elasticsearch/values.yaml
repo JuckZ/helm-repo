@@ -1,0 +1,137 @@
+# Default values for elasticsearch.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: nginx
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: es.elk.zodance.com
+      paths:
+        - path: /
+          # pathType: ImplementationSpecific
+          pathType: Prefix
+  tls:
+   - secretName: es-elk-tls
+     hosts:
+       - es.elk.zodance.com
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+volumes: []
+
+volumeMounts: []
+
+persistence:
+  config:
+    # -- Config: Enable persistence
+    enabled: true
+    # -- Config: Persistence type is pvc. When `false`, data volume definition is read from `persistence.config.customVolume`
+    isPvc: true
+    # -- Config: Name of the existing claim to be used for config
+    existingClaim: ""
+    # -- Config: Storage class for the volume
+    storageClass: ""
+    # -- Config: Annotations for the claim
+    annotations: {}
+      # helm.sh/resource-policy: keep
+    # -- Config: Access modes for the claim
+    accessModes:
+      - ReadWriteOnce
+    # -- Config: Size for the claim
+    size: 5Gi
+    # -- Config: Alternative data volume definition (e.g. nfs, hostPath). Used when `persistence.config.isPvc` is `false`
+    customVolume: {}
+      # hostPath:
+      #   path: /path/on/host
+  data:
+    # -- Data: Enable persistence
+    enabled: false
+    # -- Data: Persistence type is pvc. When `false`, data volume definition is read from `persistence.data.customVolume`
+    isPvc: true
+    # -- Data: Name of the existing claim to be used
+    existingClaim: ""
+    # -- Data: Storage class for the data volume
+    storageClass: "local-path"
+    # -- Data: Annotations for the claim
+    annotations: {}
+    # helm.sh/resource-policy: keep
+    # -- Data: Access modes for the claim
+    accessModes:
+      - ReadWriteOnce
+    # -- Data: Size for the claim
+    size: 64Gi
+    # -- Data: Alternative data volume definition (e.g. nfs, hostPath). Used when `persistence.data.isPvc` is `false`
+    customVolume: {}
+    # hostPath:
+    #   path: /path/on/host
+
+env:
+  http.host: 0.0.0.0
+  discovery.type: single-node
+  ES_JAVA_OPTS: '-Xms64m -Xmx512m'

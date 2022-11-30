@@ -1,0 +1,121 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"monitoring.coreos.com/v1","kind":"ServiceMonitor","metadata":{"annotations":{},"labels":{"app.kubernetes.io/vendor":"kubesphere","k8s-app":"kube-controller-manager"},"name":"kube-controller-manager","namespace":"kubesphere-monitoring-system"},"spec":{"endpoints":[{"bearerTokenFile":"/var/run/secrets/kubernetes.io/serviceaccount/token","interval":"1m","metricRelabelings":[{"action":"keep","regex":"up","sourceLabels":["__name__"]}],"port":"https-metrics","scheme":"https","tlsConfig":{"insecureSkipVerify":true}}],"jobLabel":"k8s-app","namespaceSelector":{"matchNames":["kube-system"]},"selector":{"matchLabels":{"k8s-app":"kube-controller-manager"}}}}
+  creationTimestamp: "2021-11-21T07:25:09Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/vendor: kubesphere
+    k8s-app: kube-controller-manager
+  managedFields:
+  - apiVersion: monitoring.coreos.com/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:labels:
+          .: {}
+          f:app.kubernetes.io/vendor: {}
+          f:k8s-app: {}
+      f:spec:
+        .: {}
+        f:endpoints: {}
+        f:jobLabel: {}
+        f:namespaceSelector:
+          .: {}
+          f:matchNames: {}
+        f:selector:
+          .: {}
+          f:matchLabels:
+            .: {}
+            f:k8s-app: {}
+    manager: kubectl
+    operation: Update
+    time: "2021-11-21T07:25:09Z"
+  name: kube-controller-manager
+  namespace: kubesphere-monitoring-system
+  resourceVersion: "7219"
+  selfLink: /apis/monitoring.coreos.com/v1/namespaces/kubesphere-monitoring-system/servicemonitors/kube-controller-manager
+  uid: eccf945a-4f9e-48df-b1be-079dadc9ba5b
+spec:
+  endpoints:
+  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    interval: 1m
+    metricRelabelings:
+    - action: keep
+      regex: up
+      sourceLabels:
+      - __name__
+    port: https-metrics
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
+  jobLabel: k8s-app
+  namespaceSelector:
+    matchNames:
+    - kube-system
+  selector:
+    matchLabels:
+      k8s-app: kube-controller-manager
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"k8s-app":"kube-controller-manager"},"name":"kube-controller-manager-svc","namespace":"kube-system"},"spec":{"clusterIP":"None","ports":[{"name":"https-metrics","port":10257,"targetPort":10257}],"selector":{"component":"kube-controller-manager"}}}
+  creationTimestamp: "2021-11-21T07:25:08Z"
+  labels:
+    k8s-app: kube-controller-manager
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:labels:
+          .: {}
+          f:k8s-app: {}
+      f:spec:
+        f:clusterIP: {}
+        f:ports:
+          .: {}
+          k:{"port":10257,"protocol":"TCP"}:
+            .: {}
+            f:name: {}
+            f:port: {}
+            f:protocol: {}
+            f:targetPort: {}
+        f:selector:
+          .: {}
+          f:component: {}
+        f:sessionAffinity: {}
+        f:type: {}
+    manager: kubectl
+    operation: Update
+    time: "2021-11-21T07:25:08Z"
+  name: kube-controller-manager-svc
+  namespace: kube-system
+  resourceVersion: "7198"
+  selfLink: /api/v1/namespaces/kube-system/services/kube-controller-manager-svc
+  uid: 826bfc5b-b003-4de4-bed3-d8d581e07292
+spec:
+  clusterIP: None
+  ports:
+  - name: https-metrics
+    port: 10257
+    protocol: TCP
+    targetPort: 10257
+  selector:
+    component: kube-controller-manager
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

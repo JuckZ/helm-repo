@@ -1,0 +1,72 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      # manage pods with the label app: clash
+      app: clash
+  template:
+    metadata:
+      labels:
+        app: clash
+    spec:
+      volumes:
+        - name: clash-conf-volume
+          hostPath:
+            path: /root/config.yaml
+      containers:
+        - name: clash
+          image: dreamacro/clash:v1.12.0
+          ports:
+            - containerPort: 7890
+            - containerPort: 7891
+            - containerPort: 9090
+          volumeMounts:
+            - name: clash-conf-volume
+              mountPath: /root/.config/clash
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clash-svc
+spec:
+  ports:
+    - name: http1
+      port: 7890
+    - name: http2
+      port: 7891
+    - name: http3
+      port: 9090
+  selector:
+    # apply service to any pod with label app: clash
+    app: clash
+---
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: clash-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - clash-be.ihave.cool
+      secretName: clash-be-tls
+  rules:
+    - host: clash-be.ihave.cool
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: clash-svc
+                port:
+                  number: 9090
+{{- end }}

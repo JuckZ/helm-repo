@@ -1,0 +1,13 @@
+regions:
+  900:
+    regionid: 900
+    regioncode: tml 
+    regionname: Tencent MainLand
+    nodes:
+      - name: 900a
+        regionid: 900
+        hostname: derper.ihave.cool
+        ipv4: 175.178.124.12
+        stunport: 3478
+        stunonly: false
+        derpport: 12345

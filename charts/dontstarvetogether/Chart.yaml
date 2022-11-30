@@ -1,0 +1,36 @@
+apiVersion: v2
+name: dontstarvetogether
+description: >-
+  A Helm chart for the game Don't Starve Together
+  based on the image https://github.com/Jamesits/docker-dst-server
+type: application
+version: 1.0.3-1
+appVersion: vanilla
+home: https://www.klei.com/games/dont-starve-together
+keywords:
+  - dont
+  - don't
+  - starve
+  - together
+  - don't starve together
+  - dontstarvetogether
+  - dst
+  - klei
+sources:
+  - https://github.com/Jamesits/docker-dst-server
+  - https://github.com/utkuozdemir/helm-charts
+icon: https://utkuozdemir.org/helm-charts/dst.png
+maintainers:
+  - name: Utku Özdemir
+    email: uoz@protonmail.com
+    url: https://utkuozdemir.org
+annotations:
+  artifacthub.io/changes: |
+    - Add artifacthub.io annotations for the changelog
+    - Add artifacthub.io images annotations
+    - Add chart icon for the artifacthub
+  artifacthub.io/images: |
+    - name: dst-server
+      image: docker.io/jamesits/dst-server:vanilla
+    - name: busybox
+      image: docker.io/busybox:musl

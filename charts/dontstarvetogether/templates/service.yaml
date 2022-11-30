@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "dontstarvetogether.fullname" . }}
+  labels:
+    {{- include "dontstarvetogether.labels" . | nindent 4 }}
+{{- with .Values.service.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.config.master.network.server_port }}
+      targetPort: master
+      protocol: UDP
+      name: master
+    - port: {{ .Values.config.master.steam.master_server_port }}
+      targetPort: master-steam
+      protocol: UDP
+      name: master-steam
+    - port: {{ .Values.config.caves.network.server_port }}
+      targetPort: caves
+      protocol: UDP
+      name: caves
+    - port: {{ .Values.config.caves.steam.master_server_port }}
+      targetPort: caves-steam
+      protocol: UDP
+      name: caves-steam
+  selector:
+    {{- include "dontstarvetogether.selectorLabels" . | nindent 4 }}

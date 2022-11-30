@@ -1,0 +1,9 @@
+useHostPorts: true
+
+config:
+  root:
+    clusterToken: pds-g^K...
+    network:
+      cluster_name: My Cool Server Name 1
+      cluster_description: My Cool Server Description 1
+      cluster_password: MySecretPassword1

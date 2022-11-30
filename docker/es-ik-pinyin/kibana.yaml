@@ -1,0 +1,134 @@
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  name: kibana
+  namespace: dianmei-prod
+  labels:
+    app.kubernetes.io/version: v1
+    app.kubernetes.io/name: kibana
+  annotations:
+    servicemesh.kubesphere.io/enabled: 'true'
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/version: v1
+      app.kubernetes.io/name: kibana
+  addOwnerRef: true
+  componentKinds:
+    - group: ''
+      kind: Service
+    - group: apps
+      kind: Deployment
+    - group: apps
+      kind: StatefulSet
+    - group: extensions
+      kind: Ingress
+    - group: servicemesh.kubesphere.io
+      kind: Strategy
+    - group: servicemesh.kubesphere.io
+      kind: ServicePolicy
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kibana-ingress
+  namespace: dianmei-prod
+  labels:
+    app.kubernetes.io/version: v1
+    app.kubernetes.io/name: kibana
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    kubesphere.io/creator: admin
+    # nginx.ingress.kubernetes.io/upstream-vhost: kibana.dianmei-prod.svc.cluster.local
+spec:
+  tls:
+    - hosts:
+        - kibana.zodance.com
+      secretName: kibana-tls
+  rules:
+    - host: kibana.zodance.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kibana
+              servicePort: 5601
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: dianmei-prod
+  labels:
+    version: v1
+    app: kibana
+    app.kubernetes.io/version: v1
+    app.kubernetes.io/name: kibana
+  name: kibana-v1
+  annotations:
+    servicemesh.kubesphere.io/enabled: 'true'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      version: v1
+      app: kibana
+      app.kubernetes.io/version: v1
+      app.kubernetes.io/name: kibana
+  template:
+    metadata:
+      labels:
+        version: v1
+        app: kibana
+        app.kubernetes.io/version: v1
+        app.kubernetes.io/name: kibana
+      annotations:
+        sidecar.istio.io/inject: 'true'
+    spec:
+      containers:
+        - name: container-8lfvlx
+          imagePullPolicy: IfNotPresent
+          image: 'kibana:7.4.2'
+          ports:
+            - name: tcp-5601
+              protocol: TCP
+              containerPort: 5601
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              value: 'http://elasticsearch.dianmei-prod:9200'
+      serviceAccount: default
+      affinity: {}
+      initContainers: []
+      volumes: []
+      imagePullSecrets: null
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: dianmei-prod
+  labels:
+    version: v1
+    app: kibana
+    app.kubernetes.io/version: v1
+    app.kubernetes.io/name: kibana
+  annotations:
+    kubesphere.io/serviceType: statelessservice
+    kubesphere.io/alias-name: kibana
+    servicemesh.kubesphere.io/enabled: 'true'
+  name: kibana
+spec:
+  sessionAffinity: None
+  selector:
+    app: kibana
+    app.kubernetes.io/version: v1
+    app.kubernetes.io/name: kibana
+  ports:
+    - name: tcp-5601
+      protocol: TCP
+      port: 5601
+      targetPort: 5601

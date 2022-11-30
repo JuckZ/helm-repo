@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+data:
+  frpc.ini: |+
+    [common]
+    bind_port = 7000
+    dashboard_port = 2333
+    token = xxxx
+    dashboard_user = xxx
+    dashboard_pwd = xxx
+    vhost_http_port = 80
+    vhost_https_port = 443
+    server_addr = xxx
+
+    [wordpress]
+    type = http
+    local_port = 8000
+    local_ip = 127.0.0.1
+    custom_domains = a.com,b.com
+kind: ConfigMap
+metadata:
+  name: frpc-conf
+  namespace: default
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frpc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frpc
+  template:
+    metadata:
+      labels:
+        app: frpc
+    spec:
+      hostNetwork: true
+      volumes:
+        - name: frpc-conf-map
+          configMap:
+            name: frpc-conf
+      containers:
+        - name: frpc
+          image: snowdreamtech/frpc:0.38.0
+          ports:
+            - containerPort: 7890
+          volumeMounts:
+            - name: frpc-conf-map
+              mountPath: /etc/frp/frpc.ini
+              subPath: frpc.ini
+---
+

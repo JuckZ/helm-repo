@@ -1,0 +1,30 @@
+apiVersion: v2
+name: prerender
+description: Helm chart for prerender wrapping tvanro/prerender-alpine
+type: application
+version: 1.1.2
+appVersion: 6.4.0
+home: https://github.com/prerender/prerender
+keywords:
+  - prerender
+  - render
+  - chrome
+  - headless-chrome
+  - tvanro
+sources:
+  - https://github.com/prerender/prerender
+  - https://github.com/tvanro/prerender-alpine
+  - https://github.com/utkuozdemir/helm-charts
+icon: https://utkuozdemir.org/helm-charts/prerender.png
+maintainers:
+  - name: Utku Özdemir
+    email: uoz@protonmail.com
+    url: https://utkuozdemir.org
+annotations:
+  artifacthub.io/license: MIT
+  artifacthub.io/changes: |
+    - Update ingress to support newer Kubernetes APIs
+    - Bump appVersion to 6.4.0
+  artifacthub.io/images: |
+    - name: tvanro/prerender-alpine
+      image: docker.io/tvanro/prerender-alpine:6.4.0

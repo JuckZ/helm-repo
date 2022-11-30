@@ -1,0 +1,155 @@
+persistence:
+  enabled: true
+  storageClass:
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+
+useHostPorts: false
+
+terminationGracePeriodSeconds: 120
+
+podSecurityPolicy:
+  create: false
+
+image:
+  repository: docker.io/jamesits/dst-server
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+initImage:
+  repository: docker.io/busybox
+  pullPolicy: IfNotPresent
+  tag: musl
+
+imagePullSecrets: [ ]
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: { }
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: { }
+
+podSecurityContext: { }
+# fsGroup: 2000
+
+securityContext: { }
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  annotations: { }
+
+resources: { }
+  # limits:
+  #   cpu: 2000m
+  #   memory: 4096Mi
+  # requests:
+  #   cpu: 1000m
+  #   memory: 2048Mi
+
+nodeSelector: { }
+
+tolerations: [ ]
+
+affinity: { }
+
+config:
+  root:
+    clusterToken:
+    network:
+      cluster_name: My Server
+      cluster_description: My Server
+      cluster_password:
+      offline_cluster: false
+      lan_only_cluster: false
+      cluster_intention: cooperative
+      autosaver_enabled: true
+      tick_rate: 30
+    gameplay:
+      game_mode: survival
+      max_players: 10
+      pvp: false
+      pause_when_empty: true
+    steam:
+      steam_group_only: false
+      steam_group_id: 0
+      steam_group_admins: false
+    misc:
+      console_enabled: true
+      max_snapshots: 6
+    shard:
+      shard_enabled: true
+      bind_ip: 127.0.0.1
+      master_ip: 127.0.0.1
+      master_port: 10998
+      cluster_key: MySecretKey
+    additionalFiles:
+      adminlist.txt: ""
+      blocklist.txt: ""
+      whitelist.txt: ""
+  master:
+    network:
+      server_port: 10999
+    shard:
+      is_master: true
+    account:
+      encode_user_path: true
+    steam:
+      master_server_port: 12346
+      authentication_port: 8766
+    additionalFiles: {}
+      #leveldataoverride.lua: |
+      #  return {
+      #    ...
+      #  }
+      #modoverrides.lua: |
+      #  return {
+      #    ...
+      #  }
+  caves:
+    network:
+      server_port: 11000
+    shard:
+      is_master: false
+      name: Caves
+    account:
+      encode_user_path: true
+    steam:
+      master_server_port: 12347
+      authentication_port: 8767
+    additionalFiles: {}
+      #leveldataoverride.lua: |
+      #  return {
+      #    ...
+      #  }
+      #modoverrides.lua: |
+      #  return {
+      #    ...
+      #  }
+  mods:
+    additionalFiles:
+      dedicated_server_mods_setup.lua: |
+        -- [API] Gem Core (mod dependency) - https://steamcommunity.com/sharedfiles/filedetails/?id=1378549454
+        --ServerModSetup("1378549454")
+        -- Health Info https://steamcommunity.com/sharedfiles/filedetails/?id=375859599
+        --ServerModSetup("375859599")
+        -- Global Positions https://steamcommunity.com/sharedfiles/filedetails/?id=378160973
+        --ServerModSetup("378160973")
+        -- Food Values - Item Tooltips https://steamcommunity.com/sharedfiles/filedetails/?id=458940297
+        --ServerModSetup("458940297")
+        -- Global Pause https://steamcommunity.com/sharedfiles/filedetails/?id=758532836
+        --ServerModSetup("758532836")

@@ -1,0 +1,92 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: redis-secret-prod
+  namespace: kubesphere-monitoring-system
+type: Opaque
+stringData:
+  addr: "redis://xxxx.redis.rds.aliyuncs.com:6379"
+  user: "xxxx"
+  password: "xxxx"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kubesphere-monitoring-system
+  name: redis-exporter-prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis-exporter-prod
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9121"
+      labels:
+        app: redis-exporter-prod
+    spec:
+      containers:
+      - name: redis-exporter
+        image: oliver006/redis_exporter:latest
+        env:
+        - name: REDIS_ADDR
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret-prod
+              key: addr
+        - name: REDIS_USER
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret-prod
+              key: user
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret-prod
+              key: password
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 9121
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-exporter-prod
+  namespace: kubesphere-monitoring-system
+  labels:
+    app: redis-exporter-prod
+spec:
+  type: ClusterIP
+  # clusterIP: None
+  selector:
+    app: redis-exporter-prod
+  ports:
+  - name: http-metrics
+    port: 9121
+    targetPort: 9121
+    protocol: TCP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: redis-service-monitor
+  name: redis
+  namespace: kubesphere-monitoring-system
+spec:
+  endpoints:
+  - interval: 30s
+    port: http-metrics
+  jobLabel: redis
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app: redis-exporter-prod
+---

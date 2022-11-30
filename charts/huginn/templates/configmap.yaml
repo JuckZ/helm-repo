@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "huginn.fullname" . }}
+  namespace: juck-app
+  labels:
+    {{- include "huginn.labels" . | nindent 4 }}
+data:
+  # APP_SECRET_TOKEN: "123"
+  DATABASE_ADAPTER: "mysql2"
+  # DATABASE_ENCODING: "utf8"
+  # DATABASE_RECONNECT: "true"
+  DATABASE_NAME: "huginn"
+  # DATABASE_POOL: "20"
+  DATABASE_USERNAME: "xxx"
+  DATABASE_PASSWORD: "xxx"
+  DATABASE_HOST: "xxx"
+  # DATABASE_PORT: "3306"
+  # TIMEZONE: "UTC"
