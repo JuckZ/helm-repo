@@ -8,6 +8,34 @@ entries:
         url: https://cert-manager.io/public-keys/cert-manager-keyring-2021-09-20-1020CF3C033D4F35BAE1C19E1226061C665DF13E.gpg
     apiVersion: v1
     appVersion: v1.10.0
+    created: "2022-12-01T09:45:49.863433877Z"
+    description: A Helm chart for cert-manager
+    digest: d1f0297b1887517d209de80d8d91ef27eb070cab923064f279374b9be5e9abf9
+    home: https://github.com/cert-manager/cert-manager
+    icon: https://raw.githubusercontent.com/cert-manager/cert-manager/d53c0b9270f8cd90d908460d69502694e1838f5f/logo/logo-small.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    kubeVersion: '>= 1.20.0-0'
+    maintainers:
+    - email: cert-manager-maintainers@googlegroups.com
+      name: cert-manager-maintainers
+      url: https://cert-manager.io
+    name: cert-manager
+    sources:
+    - https://github.com/cert-manager/cert-manager
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/cert-manager-v1.10.1-3/cert-manager-v1.10.1-3.tgz
+    version: v1.10.1-3
+  - annotations:
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/signKey: |
+        fingerprint: 1020CF3C033D4F35BAE1C19E1226061C665DF13E
+        url: https://cert-manager.io/public-keys/cert-manager-keyring-2021-09-20-1020CF3C033D4F35BAE1C19E1226061C665DF13E.gpg
+    apiVersion: v1
+    appVersion: v1.10.0
     created: "2022-11-30T11:15:26.531343558Z"
     description: A Helm chart for cert-manager
     digest: 0f83e81a93402f386554dd04cbefb7147d7c7e35645b4e4b5e6c59e11f0df7c2
@@ -171,4 +199,4 @@ entries:
     urls:
     - https://github.com/JuckZ/helm-repo/releases/download/ntfy-0.0.1/ntfy-0.0.1.tgz
     version: 0.0.1
-generated: "2022-12-01T05:13:26.897699755Z"
+generated: "2022-12-01T09:45:49.863457178Z"
