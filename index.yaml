@@ -1,5 +1,34 @@
 apiVersion: v1
 entries:
+  cert-manager:
+  - annotations:
+      artifacthub.io/prerelease: "false"
+      artifacthub.io/signKey: |
+        fingerprint: 1020CF3C033D4F35BAE1C19E1226061C665DF13E
+        url: https://cert-manager.io/public-keys/cert-manager-keyring-2021-09-20-1020CF3C033D4F35BAE1C19E1226061C665DF13E.gpg
+    apiVersion: v1
+    appVersion: v1.10.0
+    created: "2022-11-30T11:15:26.531343558Z"
+    description: A Helm chart for cert-manager
+    digest: 0f83e81a93402f386554dd04cbefb7147d7c7e35645b4e4b5e6c59e11f0df7c2
+    home: https://github.com/cert-manager/cert-manager
+    icon: https://raw.githubusercontent.com/cert-manager/cert-manager/d53c0b9270f8cd90d908460d69502694e1838f5f/logo/logo-small.png
+    keywords:
+    - cert-manager
+    - kube-lego
+    - letsencrypt
+    - tls
+    kubeVersion: '>= 1.20.0-0'
+    maintainers:
+    - email: cert-manager-maintainers@googlegroups.com
+      name: cert-manager-maintainers
+      url: https://cert-manager.io
+    name: cert-manager
+    sources:
+    - https://github.com/cert-manager/cert-manager
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/cert-manager-v1.10.1-2/cert-manager-v1.10.1-2.tgz
+    version: v1.10.1-2
   clash:
   - apiVersion: v2
     appVersion: 1.12.0
@@ -21,4 +50,67 @@ entries:
     urls:
     - https://github.com/JuckZ/helm-repo/releases/download/clash-0.0.1/clash-0.0.1.tgz
     version: 0.0.1
-generated: "2022-11-30T11:11:20.201236821Z"
+  huginn:
+  - apiVersion: v2
+    appVersion: 19fc7480ac1ee8e6528e5dfe903d987569b91486
+    created: "2022-11-30T11:15:26.648688581Z"
+    description: A Helm chart for Kubernetes
+    digest: bcba738f51614f11e9e1c82f5c69309d0ea79546843c80060399a86500c8a882
+    name: huginn
+    type: application
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/huginn-0.0.1/huginn-0.0.1.tgz
+    version: 0.0.1
+  ingress-nginx:
+  - annotations:
+      artifacthub.io/changes: |
+        - "[8890](https://github.com/kubernetes/ingress-nginx/pull/8890) migrate to endpointslices"
+        - "[9059](https://github.com/kubernetes/ingress-nginx/pull/9059) kubewebhookcertgen sha change after go1191"
+        - "[9046](https://github.com/kubernetes/ingress-nginx/pull/9046) Parameterize metrics port name"
+        - "[9104](https://github.com/kubernetes/ingress-nginx/pull/9104) Fix yaml formatting error with multiple annotations"
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 1.4.0
+    created: "2022-11-30T11:15:26.776259758Z"
+    description: Ingress controller for Kubernetes using NGINX as a reverse proxy
+      and load balancer
+    digest: 3e25abf5f5b8b8ff6c9711e992593e31bc44c26fa52dd893a323ac3503952e24
+    home: https://github.com/kubernetes/ingress-nginx
+    icon: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nginx_logo.svg/500px-Nginx_logo.svg.png
+    keywords:
+    - ingress
+    - nginx
+    kubeVersion: '>=1.20.0-0'
+    maintainers:
+    - name: rikatz
+    - name: strongjz
+    - name: tao12345666333
+    name: ingress-nginx
+    sources:
+    - https://github.com/kubernetes/ingress-nginx
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/ingress-nginx-4.3.1-2/ingress-nginx-4.3.1-2.tgz
+    version: 4.3.1-2
+  juck-site:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-11-30T11:15:26.895920493Z"
+    description: A Helm chart for Kubernetes
+    digest: 5886a74e0483f6b1720cf659401d0ed1ad97154593cd9a06b45c2082fbf63a56
+    name: juck-site
+    type: application
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/juck-site-0.0.1/juck-site-0.0.1.tgz
+    version: 0.0.1
+  ntfy:
+  - apiVersion: v2
+    appVersion: v1.28.0
+    created: "2022-11-30T11:15:27.029006299Z"
+    description: A Helm chart for Kubernetes
+    digest: 05ec02a19db59524e70fe1525abe127583a7f524eff92e9752e21ee2ddd1d4f8
+    name: ntfy
+    type: application
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/ntfy-0.0.1/ntfy-0.0.1.tgz
+    version: 0.0.1
+generated: "2022-11-30T11:15:27.029016299Z"
