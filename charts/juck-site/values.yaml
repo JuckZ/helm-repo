@@ -50,14 +50,6 @@ ingress:
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: 'letsencrypt-prod'
   hosts:
-    - host: juck.zodance.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-    - host: jz.zodance.com
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
     - host: juck.site
       paths:
         - path: /
@@ -77,8 +69,6 @@ ingress:
   tls:
    - secretName: juck-site-tls
      hosts:
-       - juck.zodance.com
-       - jz.zodance.com
        - juck.site
        - blog.juck.site
        - ihave.cool

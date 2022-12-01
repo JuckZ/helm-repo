@@ -44,6 +44,8 @@ spec:
           #     value: elasticsearch
           #   - name: ES_HOSTS
           #     value: 'elasticsearch.be-base:9200'
+      nodeSelector:
+        app.kubernetes.io/name: tx-master01
       serviceAccount: default
       affinity: {}
       initContainers: []
@@ -91,10 +93,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - zipkin.zodance.com
+        - zipkin.ihave.cool
       secretName: zipkin-tls
   rules:
-    - host: zipkin.zodance.com
+    - host: zipkin.ihave.cool
       http:
         paths:
           - pathType: Prefix

@@ -1,8 +1,8 @@
 # The url clients will connect to.
 # Typically this will be a domain like:
 #
-#server_url: http://175.178.124.12:8080
-server_url: http://headscale.ihave.cool:8080
+# server_url: http://175.178.124.12:8080
+server_url: https://headscale.ihave.cool:8080
 
 # Address to listen to / bind to on the server
 listen_addr: 0.0.0.0:8080
@@ -45,7 +45,6 @@ noise:
 # and the associated prefix length, delimited by a slash.
 ip_prefixes:
   - fd7a:115c:a1e0::/48
-  #- 10.1.0.0/16
   - 100.64.0.0/10
 
 # DERP is a relay system that Tailscale uses when a direct
@@ -104,18 +103,15 @@ db_path: /var/lib/headscale/db.sqlite
 acme_url: https://acme-v02.api.letsencrypt.org/directory
 
 # Email to register with ACME provider
-#acme_email: "juckz@foxmail.com"
-acme_email: ""
+acme_email: "juckz@foxmail.com"
 
 # Domain name to request a TLS certificate for:
-#tls_letsencrypt_hostname: "derper.ihave.cool"
-tls_letsencrypt_hostname: ""
+tls_letsencrypt_hostname: "headscale.ihave.cool"
 
 # Path to store certificates and metadata needed by
 # letsencrypt
 # For production:
-# tls_letsencrypt_cache_dir: /var/lib/headscale/cache
-tls_letsencrypt_cache_dir: ./cache
+tls_letsencrypt_cache_dir: /var/lib/headscale/cache
 
 # Type of ACME challenge to use, currently supported types:
 # HTTP-01 or TLS-ALPN-01
