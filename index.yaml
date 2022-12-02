@@ -180,6 +180,16 @@ entries:
   juck-site:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-12-01T18:09:14.7717711Z"
+    description: A Helm chart for Kubernetes
+    digest: e467f8813381a82f9b81c311e804fc33d17e5339e2b36bf7e55c03e81cd5c155
+    name: juck-site
+    type: application
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/juck-site-0.0.2/juck-site-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-11-30T11:15:26.895920493Z"
     description: A Helm chart for Kubernetes
     digest: 5886a74e0483f6b1720cf659401d0ed1ad97154593cd9a06b45c2082fbf63a56
@@ -199,4 +209,4 @@ entries:
     urls:
     - https://github.com/JuckZ/helm-repo/releases/download/ntfy-0.0.1/ntfy-0.0.1.tgz
     version: 0.0.1
-generated: "2022-12-01T09:45:49.863457178Z"
+generated: "2022-12-01T18:09:14.7717911Z"
