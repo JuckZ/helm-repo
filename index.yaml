@@ -70,6 +70,16 @@ entries:
     version: 0.0.4
   - apiVersion: v2
     appVersion: 1.12.0
+    created: "2022-12-02T08:29:34.569964542Z"
+    description: A Helm chart for Kubernetes
+    digest: fa280d2776797039a45dd00791f2233d136df593f399be232475a34776c4307d
+    name: clash
+    type: application
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/clash-0.0.2/clash-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: 1.12.0
     created: "2022-11-30T11:11:20.20122762Z"
     description: A Helm chart for Kubernetes
     digest: ed1801d2618f19ab1de88084e8e7ce099cfbb5e5ba2cda8d136d0f9fd9659533
@@ -209,4 +219,4 @@ entries:
     urls:
     - https://github.com/JuckZ/helm-repo/releases/download/ntfy-0.0.1/ntfy-0.0.1.tgz
     version: 0.0.1
-generated: "2022-12-01T18:09:14.7717911Z"
+generated: "2022-12-02T08:29:34.569986442Z"
