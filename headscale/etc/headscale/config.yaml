@@ -123,8 +123,8 @@ tls_letsencrypt_challenge_type: HTTP-01
 tls_letsencrypt_listen: ":http"
 
 ## Use already defined certificates:
-tls_cert_path: ""
-tls_key_path: ""
+tls_cert_path: "/etc/headscale/certs/headscale.ihave.cool.crt"
+tls_key_path: "/etc/headscale/certs/headscale.ihave.cool.key"
 
 log:
   # Output formatting for logs: text or json

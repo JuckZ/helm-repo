@@ -45,7 +45,7 @@ spec:
           #   - name: ES_HOSTS
           #     value: 'elasticsearch.be-base:9200'
       nodeSelector:
-        app.kubernetes.io/name: tx-master01
+        kubernetes.io/hostname: tx-master01
       serviceAccount: default
       affinity: {}
       initContainers: []
