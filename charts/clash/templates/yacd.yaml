@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: yacd
-          image: haishanh/yacd
+          image: haishanh/yacd:v0.3.8
           ports:
             - containerPort: 80
       nodeSelector:
