@@ -135,6 +135,32 @@ entries:
     urls:
     - https://github.com/JuckZ/helm-repo/releases/download/harbor-1.10.2/harbor-1.10.2.tgz
     version: 1.10.2
+  - apiVersion: v1
+    appVersion: 2.6.2
+    created: "2022-12-04T04:41:34.854590125Z"
+    description: An open source trusted cloud native registry that stores, signs,
+      and scans content
+    digest: 00338d30ec330d868c8cd8321b6d2ce30ec4ca7b899eab1cac705bf98cd37620
+    home: https://goharbor.io
+    icon: https://raw.githubusercontent.com/goharbor/website/master/static/img/logos/harbor-icon-color.png
+    keywords:
+    - docker
+    - registry
+    - harbor
+    maintainers:
+    - email: yinw@vmware.com
+      name: Wenkai Yin
+    - email: hweiwei@vmware.com
+      name: Weiwei He
+    - email: yshengwen@vmware.com
+      name: Shengwen Yu
+    name: harbor
+    sources:
+    - https://github.com/goharbor/harbor
+    - https://github.com/goharbor/harbor-helm
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/harbor-1.10.2-1/harbor-1.10.2-1.tgz
+    version: 1.10.2-1
   huginn:
   - apiVersion: v2
     appVersion: 19fc7480ac1ee8e6528e5dfe903d987569b91486
@@ -266,4 +292,4 @@ entries:
     urls:
     - https://github.com/JuckZ/helm-repo/releases/download/ntfy-0.0.1/ntfy-0.0.1.tgz
     version: 0.0.1
-generated: "2022-12-04T04:30:32.185709017Z"
+generated: "2022-12-04T04:41:34.854631524Z"
