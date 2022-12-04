@@ -431,7 +431,8 @@ nginx:
   #  requests:
   #    memory: 256Mi
   #    cpu: 100m
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/hostname: racknerd-node1
   tolerations: []
   affinity: {}
   ## Additional deployment annotations
@@ -453,7 +454,8 @@ portal:
   #  requests:
   #    memory: 256Mi
   #    cpu: 100m
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/hostname: racknerd-node1
   tolerations: []
   affinity: {}
   ## Additional deployment annotations
@@ -479,7 +481,8 @@ core:
   #  requests:
   #    memory: 256Mi
   #    cpu: 100m
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/hostname: racknerd-node1
   tolerations: []
   affinity: {}
   ## Additional deployment annotations
@@ -565,7 +568,8 @@ registry:
     #    cpu: 100m
   replicas: 1
   revisionHistoryLimit: 10
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/hostname: racknerd-node1
   tolerations: []
   affinity: {}
   ## Additional deployment annotations
@@ -624,7 +628,8 @@ chartmuseum:
   #  requests:
   #    memory: 256Mi
   #    cpu: 100m
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/hostname: racknerd-node1
   tolerations: []
   affinity: {}
   ## Additional deployment annotations
@@ -699,7 +704,8 @@ trivy:
     limits:
       cpu: 1
       memory: 1Gi
-  nodeSelector: {}
+  nodeSelector:
+    kubernetes.io/hostname: racknerd-node1
   tolerations: []
   affinity: {}
   ## Additional deployment annotations
@@ -742,7 +748,8 @@ notary:
     #  requests:
     #    memory: 256Mi
     #    cpu: 100m
-    nodeSelector: {}
+    nodeSelector:
+      kubernetes.io/hostname: racknerd-node1
     tolerations: []
     affinity: {}
     ## Additional deployment annotations
