@@ -19,6 +19,9 @@ spec:
           image: haishanh/yacd:v0.3.8
           ports:
             - containerPort: 80
+          env:
+            # TODO 修改为内网域名
+            YACD_DEFAULT_BACKEND: "https://clash-be.ihave.cool"
       nodeSelector:
         kubernetes.io/hostname: ali-node1
 ---
