@@ -80,6 +80,16 @@ entries:
     version: 0.0.2
   - apiVersion: v2
     appVersion: 1.12.0
+    created: "2022-12-04T04:30:31.955211981Z"
+    description: A Helm chart for Kubernetes
+    digest: cdc561721ca3682f1c14fe9aede718b7bab8cb89a2eded5d06253d904ef0d5e4
+    name: clash
+    type: application
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/clash-0.0.2-2/clash-0.0.2-2.tgz
+    version: 0.0.2-2
+  - apiVersion: v2
+    appVersion: 1.12.0
     created: "2022-12-03T02:11:17.786059619Z"
     description: A Helm chart for Kubernetes
     digest: d361750b78160ba2a059fefa14d112e997bef69c6f58f44f91670145e465feb7
@@ -98,6 +108,33 @@ entries:
     urls:
     - https://github.com/JuckZ/helm-repo/releases/download/clash-0.0.1/clash-0.0.1.tgz
     version: 0.0.1
+  harbor:
+  - apiVersion: v1
+    appVersion: 2.6.2
+    created: "2022-12-04T04:30:32.185580812Z"
+    description: An open source trusted cloud native registry that stores, signs,
+      and scans content
+    digest: d13f8b07327c42634cb1c696559516bfb6899aaa20e8dfd8a7a67f40020290c2
+    home: https://goharbor.io
+    icon: https://raw.githubusercontent.com/goharbor/website/master/static/img/logos/harbor-icon-color.png
+    keywords:
+    - docker
+    - registry
+    - harbor
+    maintainers:
+    - email: yinw@vmware.com
+      name: Wenkai Yin
+    - email: hweiwei@vmware.com
+      name: Weiwei He
+    - email: yshengwen@vmware.com
+      name: Shengwen Yu
+    name: harbor
+    sources:
+    - https://github.com/goharbor/harbor
+    - https://github.com/goharbor/harbor-helm
+    urls:
+    - https://github.com/JuckZ/helm-repo/releases/download/harbor-1.10.2/harbor-1.10.2.tgz
+    version: 1.10.2
   huginn:
   - apiVersion: v2
     appVersion: 19fc7480ac1ee8e6528e5dfe903d987569b91486
@@ -229,4 +266,4 @@ entries:
     urls:
     - https://github.com/JuckZ/helm-repo/releases/download/ntfy-0.0.1/ntfy-0.0.1.tgz
     version: 0.0.1
-generated: "2022-12-03T02:11:17.78614782Z"
+generated: "2022-12-04T04:30:32.185709017Z"
