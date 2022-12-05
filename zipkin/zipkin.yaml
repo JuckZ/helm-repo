@@ -94,9 +94,20 @@ spec:
   tls:
     - hosts:
         - zipkin.ihave.cool
+        - zipkin.zodance.com
       secretName: zipkin-tls
   rules:
     - host: zipkin.ihave.cool
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: zipkin
+                port:
+                  number: 9411
+    - host: zipkin.zodance.com
       http:
         paths:
           - pathType: Prefix
