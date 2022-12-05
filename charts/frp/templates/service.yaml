@@ -1,15 +1,31 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "frp.fullname" . }}
+  name: {{ include "frp.fullname" . }}-api
   labels:
     {{- include "frp.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.apiService.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: {{ .Values.apiService.port }}
+      targetPort: http-api
       protocol: TCP
-      name: http
+      name: http-api
+  selector:
+    {{- include "frp.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "frp.fullname" . }}-dashboard
+  labels:
+    {{- include "frp.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.dashboardService.type }}
+  ports:
+    - port: {{ .Values.dashboardService.port }}
+      targetPort: http-dashboard
+      protocol: TCP
+      name: http-dashboard
   selector:
     {{- include "frp.selectorLabels" . | nindent 4 }}

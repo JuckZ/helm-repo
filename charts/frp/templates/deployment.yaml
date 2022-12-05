@@ -27,6 +27,10 @@ spec:
       serviceAccountName: {{ include "frp.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: frps-conf-volume
+          hostPath:
+            path: /root/frps/
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -34,17 +38,15 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: 80
+            - name: http-api
+              containerPort: 7000
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            - name: http-dashboard
+              containerPort: 2333
+              protocol: TCP
+          volumeMounts:
+            - name: frps-conf-volume
+              mountPath: /etc/frp
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
