@@ -1,31 +1,21 @@
 mirrors:
   k8s.gcr.io:
     endpoint:
-      - "https://registry.cn-shenzhen.aliyuncs.com"
-      - "https://registry.cn-hangzhou.aliyuncs.com"
+      - https://registry.cn-shenzhen.aliyuncs.com
+      - https://registry.cn-hangzhou.aliyuncs.com
     rewrite:
-      "(.*)": "icool/$1"
+      "^sig-storage/(.*)": "icool/gcr.$1"
   docker.io:
     endpoint:
-      - "https://x8pwdtpq.mirror.aliyuncs.com"
-    rewrite:
-      # "^rancher/(.*)": "mirrorproject/rancher-images/$1"
-      "^rancher/mirrored-pause:3.6": "icool/rancher.mirrored-pause:3.6"
-      "^k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.3.0": "icool/gcr.csi-node-driver-registrar:v2.3.0"
-      "^k8s.gcr.io/sig-storage/csi-resizer:v1.2.0": "icool/gcr.csi-resizer:v1.2.0"
-      "^k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.3": "icool/gcr.csi-snapshotter:v3.0.3"
-      "^k8s.gcr.io/sig-storage/csi-attacher:v3.1.0": "icool/gcr.csi-attacher:v3.1.0"
-      "^k8s.gcr.io/sig-storage/snapshot-controller:v3.0.3": "icool/gcr.snapshot-controller:v3.0.3"
-      "^k8s.gcr.io/sig-storage/csi-provisioner:v3.0.0": "icool/gcr.csi-provisioner:v3.0.0"
+      - https://docker.mirrors.ustc.edu.cn
+      - http://hub-mirror.c.163.com
+      - https://x8pwdtpq.mirror.aliyuncs.com
 configs:
-  "x8pwdtpq.mirror.aliyuncs.com":
+  x8pwdtpq.mirror.aliyuncs.com:
     auth:
-      username: 18780992520
-      password: zc1998zc
-
-# configs:
-#   # "x8pwdtpq.mirror.aliyuncs.com":
-#   "registry.cn-hangzhou.aliyuncs.com":
-#     auth:
-#       username: ${ALIYUN_REGISTER_USER}
-#       password: ${ALIYUN_REGISTER_PASS}
+      username: ${USER_NAME}
+      password: ${PASSWORD}
+  registry.cn-hangzhou.aliyuncs.com:
+    auth:
+      username: ${USER_NAME}
+      password: ${PASSWORD}
