@@ -38,6 +38,12 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
+            - name: http-api-http
+              containerPort: 80
+              protocol: TCP
+            - name: http-api-https
+              containerPort: 443
+              protocol: TCP
             - name: http-api
               containerPort: 7000
               protocol: TCP

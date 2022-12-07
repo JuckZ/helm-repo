@@ -48,4 +48,29 @@ spec:
             name: frps-dashboard
             port:
               number: 2333
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: svc.frps-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+spec:
+  tls:
+    - hosts:
+        - api-test.ihave.cool
+      secretName: svc.frps-tls
+  rules:
+  - host: api-test.ihave.cool
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ include "frp.fullname" . }}-api-http-https
+            port:
+              number: 80
 {{- end }}
