@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: test
+  labels:
+    version: v1
+    app: test
+    app.kubernetes.io/version: v1
+    app.kubernetes.io/name: test
+  name: test-v1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      version: v1
+      app: test
+      app.kubernetes.io/version: v1
+      app.kubernetes.io/name: test
+  template:
+    metadata:
+      labels:
+        version: v1
+        app: test
+        app.kubernetes.io/version: v1
+        app.kubernetes.io/name: test
+    spec:
+      containers:
+        - name: container-test1
+          imagePullPolicy: IfNotPresent
+          image: busybox
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                topologyKey: kubernetes.io/hostname
