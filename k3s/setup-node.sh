@@ -30,3 +30,18 @@ sudo \cp -f k3s /usr/local/bin/k3s
 TAILSCALE_IP=${NODE2_TAILSCALE_IP}
 EXPOSE_IP=${NODE2_EXPOSE_IP}
 K3S_URL=${MY_K3S_URL}  K3S_TOKEN=${MY_K3S_TOKEN} INSTALL_K3S_SKIP_DOWNLOAD=true INSTALL_K3S_EXEC="agent --node-ip $TAILSCALE_IP --node-external-ip $TAILSCALE_IP --flannel-iface tailscale0 --kube-proxy-arg proxy-mode=ipvs masquerade-all=true metrics-bind-address=0.0.0.0" ./install.sh
+
+# ==========================
+# ======= manjaro ==========
+# ==========================
+cd ~/k3s
+chmod +x ./install.sh
+chmod +x ./k3s
+sudo mkdir -p /var/lib/rancher/k3s/agent/images/
+# gzip -d file.gz
+sudo \cp -f ./k3s-airgap-images-amd64.tar /var/lib/rancher/k3s/agent/images/
+sudo \cp -f k3s /usr/local/bin/k3s
+
+TAILSCALE_IP=${NODE3_TAILSCALE_IP}
+EXPOSE_IP=${NODE3_EXPOSE_IP}
+K3S_URL=${MY_K3S_URL}  K3S_TOKEN=${MY_K3S_TOKEN} INSTALL_K3S_SKIP_DOWNLOAD=true INSTALL_K3S_EXEC="agent --node-ip $TAILSCALE_IP --node-external-ip $TAILSCALE_IP --flannel-iface tailscale0 --kube-proxy-arg proxy-mode=ipvs masquerade-all=true metrics-bind-address=0.0.0.0" ./install.sh
