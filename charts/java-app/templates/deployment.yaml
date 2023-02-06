@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "java-app.fullname" . }}
+  labels:
+    {{- include "java-app.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "java-app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "java-app.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "java-app.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          command: ["java"]
+          args: ["$JAVA_OPTS", "-Dfile.encoding=utf-8", "-jar", {{ .Values.jarfile }}, "--spring.profiles.active=$ENV", "--server.port=80", "--spring.cloud.nacos.discovery.ip=${PUBLIC_IP}", "--spring.cloud.nacos.discovery.port=${PUBLIC_PORT}"]
+          volumeMounts:
+            - name: {{ include "java-app.fullname" . }}-volume
+              mountPath: /
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: {{ include "java-app.fullname" . }}-volume
+          hostPath:
+            path: {{ .Values.jarfile }}
+      env:
+        - name: PUBLIC_IP
+          value: "127.0.0.1"
+        - name: PUBLIC_PORT
+          value: "8080"
+        - name: NACOS_HOST
+          value: "nacos.ihave.cool"
+        - name: NACOS_PORT
+          value: "8848"
+        - name: TIME_ZONE
+          value: "Asia/Shanghai"
+        - name: JAVA_OPTS
+          value: "-Xms128m -Xmx128m"
+        - name: ENV
+          value: "prod"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
