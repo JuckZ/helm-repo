@@ -38,10 +38,29 @@ spec:
               containerPort: 80
               protocol: TCP
           command: ["java"]
-          args: ["$JAVA_OPTS", "-Dfile.encoding=utf-8", "-jar", {{ .Values.jarfile }}, "--spring.profiles.active=$ENV", "--server.port=80", "--spring.cloud.nacos.discovery.ip=${PUBLIC_IP}", "--spring.cloud.nacos.discovery.port=${PUBLIC_PORT}"]
+          args: ["-jar", {{ .Values.jarfile }}, "--server.port=80"]
+          env:
+            - name: PUBLIC_IP
+              value: "127.0.0.1"
+            - name: PUBLIC_PORT
+              value: "8080"
+            - name: NACOS_HOST
+              value: "nacos.ihave.cool"
+            - name: NACOS_PORT
+              value: "8848"
+            - name: TIME_ZONE
+              value: "Asia/Shanghai"
+            - name: JAVA_OPTS
+              value: "-Xms128m -Xmx128m"
+            - name: ENV
+              value: "prod"
           volumeMounts:
+            - mountPath: /usr/share/java
+              name: mydir
             - name: {{ include "java-app.fullname" . }}-volume
-              mountPath: /
+              mountPath: /usr/share/java/coolsite-0.0.1-SNAPSHOT.jar
+              # readOnly: true
+              # subPath: coolsite-0.0.1-SNAPSHOT.jar
           livenessProbe:
             httpGet:
               path: /
@@ -53,24 +72,15 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       volumes:
+        - name: mydir
+          hostPath:
+            # 确保文件所在目录成功创建。
+            path: /usr/share/java
+            type: DirectoryOrCreate
         - name: {{ include "java-app.fullname" . }}-volume
           hostPath:
             path: {{ .Values.jarfile }}
-      env:
-        - name: PUBLIC_IP
-          value: "127.0.0.1"
-        - name: PUBLIC_PORT
-          value: "8080"
-        - name: NACOS_HOST
-          value: "nacos.ihave.cool"
-        - name: NACOS_PORT
-          value: "8848"
-        - name: TIME_ZONE
-          value: "Asia/Shanghai"
-        - name: JAVA_OPTS
-          value: "-Xms128m -Xmx128m"
-        - name: ENV
-          value: "prod"
+            type: FileOrCreate
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
