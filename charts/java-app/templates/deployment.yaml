@@ -50,8 +50,8 @@ spec:
               value: "8848"
             - name: TIME_ZONE
               value: "Asia/Shanghai"
-            - name: JAVA_OPTS
-              value: "-Xms128m -Xmx128m"
+            # - name: JAVA_OPTS
+            #   value: "-Xms128m -Xmx128m"
             - name: ENV
               value: "prod"
           volumeMounts:
